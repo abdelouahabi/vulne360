@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.vulnepro.nvdproject.dto.CVEResponseTO;
 import org.vulnepro.nvdproject.nvdutils.CveApiJson20;
-import org.vulnepro.nvdproject.nvdutils.DefCveItem;
 import org.vulnepro.nvdproject.nvdutils.NVDVulnerability;
 
 import java.util.*;
@@ -83,12 +82,11 @@ public class VulneService {
                 .replace("{cveOK}", String.valueOf(tempDataStore.size()))
                 .replace("{cveKO}", String.valueOf(unprocessedCves));
 
-        // Append failed CVE IDs to the error message
         if (!failedCveIds.isEmpty()) {
             finalMessage += " Failed CVEs: " + String.join(", ", failedCveIds) + ".";
         }
 
-        // If there are any errors and skipError is true, append the accumulated errors
+        // If there are any errors and skipError is true then append the errors
         if (unprocessedCves > 0 && skipError) {
             finalMessage += " " + errorMessages.toString();
         }
@@ -127,8 +125,7 @@ public class VulneService {
     }
 
     public List<NVDVulnerability> fetchVulnerabilities(String cveId) {
-        // Fetch vulnerabilities based on cveId
-        return List.of(cveDataStore.get(cveId)); // Return the fetched vulnerabilities
+        return List.of(cveDataStore.get(cveId));
     }
 
     public void clearAll() {

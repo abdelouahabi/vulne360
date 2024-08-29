@@ -49,8 +49,7 @@ public class CveController {
             double averageScore = scoreCalcService.calculateAvgBaseScoreByYearAndAccessVector(year, accessVector);
             return ResponseEntity.ok(averageScore);
         } catch (Exception e) {
-            // Log the exception and return an error response
-            e.printStackTrace(); // Replace with proper logging
+            e.printStackTrace();
             return ResponseEntity.status(500).body(null);
         }
     }
